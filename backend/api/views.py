@@ -18,7 +18,7 @@ class CatViewSet(viewsets.ModelViewSet):
         IsAuthenticated, IsAuthorOrReadOnly,
     )
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['breed']
+    filterset_fields = ['breed', 'owner__username']
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)

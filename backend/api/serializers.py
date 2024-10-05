@@ -4,7 +4,13 @@ from rest_framework.fields import SerializerMethodField
 from rest_framework.relations import PrimaryKeyRelatedField
 from rest_framework.validators import UniqueTogetherValidator
 
-from cats.models import Breed, Cat, Rating
+from cats.models import Breed, Cat, Rating, User
+
+
+class OwnerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username',]
 
 
 class BreedSerializer(serializers.ModelSerializer):
@@ -18,21 +24,28 @@ class CatSerializer(serializers.ModelSerializer):
     breed = PrimaryKeyRelatedField(queryset=Breed.objects.all(),
                                    many=False)
     rating = SerializerMethodField(read_only=False)
-    owner_name = SerializerMethodField(read_only=True)
+    owner = serializers.SlugRelatedField(
+        slug_field='username',
+        read_only=True,
+        default=serializers.CurrentUserDefault()
+    )
 
     class Meta:
         model = Cat
         fields = (
             'id', 'name', 'color', 'age', 'breed',
-            'owner_name', 'rating', 'description'
+            'owner', 'rating', 'description'
         )
 
     def get_rating(self, cat):
         if int(Rating.objects.filter(cat=cat).count()) == 0:
             return 'Этого котика еще никто не оценил'
-        return Rating.objects.filter(
-            cat=cat
-        ).aggregate(Avg('rate'))['rate__avg']
+        return round(
+            Rating.objects.filter(
+                cat=cat
+            ).aggregate(Avg('rate'))['rate__avg'],
+            2
+        )
 
     def get_owner_name(self, cat):
         return cat.owner.username
