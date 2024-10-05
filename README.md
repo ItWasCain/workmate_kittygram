@@ -48,7 +48,7 @@ POST http://localhost:8000/api/auth/jwt/create/
     "username": "YourName",
     "password": "YourPassword"
 }
-
+```
 
 ### Документация
 Swagger - http://localhost:8000/swagger/
