@@ -7,12 +7,6 @@ from rest_framework.validators import UniqueTogetherValidator
 from cats.models import Breed, Cat, Rating, User
 
 
-class OwnerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['id', 'username',]
-
-
 class BreedSerializer(serializers.ModelSerializer):
 
     class Meta:
