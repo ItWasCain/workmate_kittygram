@@ -56,7 +56,7 @@ Redoc - http://localhost:8000/redoc/
 
 ### Использованные технологии:
 
-    Python, Django, Django Rest Framework, PostgeSQL, Docker.
+    Python, Django, Django Rest Framework, PostgeSQL, JWT, Docker.
 
 
 ### Разработчик:
