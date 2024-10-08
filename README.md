@@ -12,6 +12,7 @@
 git clone https://github.com/ItWasCain/workmate_kittygram.git
 cd workmate_kittygram/infra/
 ```
+Добавить .env в /infra и заполнить его по примеру.
 
 Запустить проект в Docker, выполнить миграции и собрать статику:
 ```
